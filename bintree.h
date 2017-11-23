@@ -79,10 +79,12 @@ protected:
     Graph G;
 
     std::vector<ogdf::node> NullNodes;
+    std::string output_filename;
 
 private:
     bool elem_found = false;
     Leaf *search_result;
+
 };
 
 //-----TYPENAME ALIAS DEFINED
@@ -270,14 +272,16 @@ template<typename T>
 class IdealTree: public BinTree<T>
 {
 public:
-    IdealTree<T>(int L, int R, const std::vector<T> &A)
+    IdealTree<T>(int L, int R, const std::vector<T> &A, const std::string &filename)
     {
+        this->output_filename = filename;
         this->index = 0;
         BinTree<T>::root = IDSP(L, R, A);
     }
 
-    IdealTree<T>(const std::vector<T> &A)
+    IdealTree<T>(const std::vector<T> &A, const std::string &filename)
     {
+        this->output_filename = filename;
         this->index = 0;
         BinTree<T>::root = IDSP(0, static_cast<int>(A.size() - 1), A);
     }
@@ -311,8 +315,10 @@ template<typename T>
 class RandomTree: public BinTree<T>
 {
 public:
-    explicit RandomTree<T>(const std::vector<T> &a)
+    explicit RandomTree<T>(const std::vector<T> &a, const std::string &filename)
     {
+        this->output_filename = filename;
+
         for (int i = 0; i < a.size(); i++)
             RDP(a[i]);
     }
@@ -409,8 +415,10 @@ class AVLTree: public BinTree<T>
 {
 public:
 
-    explicit AVLTree(std::vector<T> &vec)
+    explicit AVLTree(const std::vector<T> &vec, const std::string &filename)
     {
+        this->output_filename = filename;
+
         for (auto p : vec) {
             AVL(this->root, p);
         }
@@ -735,7 +743,7 @@ template<typename T>
 class OptimalTree: public RandomTree<T>
 {
 public:
-    explicit OptimalTree(const std::vector<T> &vec);
+    explicit OptimalTree(const std::vector<T> &vec, const std::string &filename);
 
 private:
     int **AW, **AR, **AP;
@@ -745,8 +753,10 @@ private:
 };
 
 template<typename T>
-OptimalTree<T>::OptimalTree(const std::vector<T> &vec)
+OptimalTree<T>::OptimalTree(const std::vector<T> &vec, const std::string &filename)
 {
+    this->output_filename = filename;
+
     int n = vec.size();
     this->size_n = n;
 

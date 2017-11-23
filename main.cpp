@@ -8,31 +8,20 @@
 
 using namespace std;
 
-int main() {
+
+int main(int argc, char *argv[]) {
     const int N = 10;
 
     srand(static_cast<unsigned int>(time(nullptr)));
 
-    vector<int> A{19,16,12,13,3};
-
-    for (int i = 0; i < 20; i++)
+    vector<int> vec;
+    for (int i = 0; i < 100; i++)
     {
-        A.push_back(rand() % 400 + 100);
+        vec.push_back(rand() % 400 + 100);
     }
-
-    for (int i = 0; i < A.size(); i++)
-        cout << A[i] << " ";
-    cout << endl;
-
-    AVLTree<int> tree(A);
-
+    AVLTree<int> tree(vec, "test.svg");
+    tree.print();
     tree.drawGraph();
-    cout << "----------------------------" << endl;
-
-    cout << "Размер дерева: " << tree.size() << endl;
-    cout << "Высота дерева: " << tree.tree_height() << endl;
-    cout << "Средняя высота дерева: " << tree.average_height() << endl;
-    cout << "Контрольная сумма: " << tree.control_sum() << endl;
 
     return 0;
 }
