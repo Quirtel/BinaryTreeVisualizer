@@ -3,11 +3,12 @@ project(Binary_tree)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(SOURCE_FILES main.cpp bintree.h)
+add_executable(Binary_tree ${SOURCE_FILES})
 
-    set(SOURCE_FILES main.cpp bintree.h)
-    add_executable(Binary_tree ${SOURCE_FILES})
-
-    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/ogdf/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/ogdf/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/ogdf/)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     target_link_libraries(Binary_tree ${CMAKE_CURRENT_SOURCE_DIR}/ogdf/libOGDF.a)

@@ -8,7 +8,6 @@
 
 using namespace std;
 
-
 int main() {
     const int N = 10;
 
@@ -34,8 +33,6 @@ int main() {
     cout << "Высота дерева: " << tree.tree_height() << endl;
     cout << "Средняя высота дерева: " << tree.average_height() << endl;
     cout << "Контрольная сумма: " << tree.control_sum() << endl;
-
-
 
     return 0;
 }
