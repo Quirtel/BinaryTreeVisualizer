@@ -139,31 +139,15 @@ int BinTree<T>::get_average_height(Leaf *p, int level) const
         return level + get_average_height(p->left, level + 1) + get_average_height(p->right, level + 1);
 }
 
-template<>
-int BinTree<int>::get_control_sum(Leaf *p) const
+template<typename T>
+int BinTree<T>::get_control_sum(Leaf *p) const
 {
     int size = 0;
-    if (p == nullptr) return 0;
+    if constexpr(std::is_same<T, std::string>::value)
+        return 0;
+    if (p == nullptr ) return 0;
     else
         return p->data + get_control_sum(p->left) + get_control_sum(p->right);
-}
-
-template<>
-int BinTree<const char *>::get_control_sum(Leaf *p) const
-{
-    return 0;
-}
-
-template<>
-int BinTree<char *>::get_control_sum(Leaf *p) const
-{
-    return 0;
-}
-
-template<>
-int BinTree<std::string>::get_control_sum(Leaf *p) const
-{
-    return 0;
 }
 
 template<typename T>
@@ -179,12 +163,12 @@ void BinTree<T>::draw_graph(Leaf *p)
 
     GraphAttributes GA(G);
     GA.init(GraphAttributes::nodeGraphics |
-            GraphAttributes::edgeGraphics |
-            GraphAttributes::nodeLabel |
-            GraphAttributes::nodeStyle |
-            GraphAttributes::edgeType |
-            GraphAttributes::edgeArrow |
-            GraphAttributes::edgeStyle); // Create graph attributes for this graph
+        GraphAttributes::edgeGraphics |
+        GraphAttributes::nodeLabel |
+        GraphAttributes::nodeStyle |
+        GraphAttributes::edgeType |
+        GraphAttributes::edgeArrow |
+        GraphAttributes::edgeStyle); // Create graph attributes for this graph
 
     for (node v = G.firstNode(); v; v = v->succ()) { // iterate through all the node in the graph
         GA.fillColor(v) = Color("#FFFF00");
@@ -203,11 +187,11 @@ void BinTree<T>::draw_graph(Leaf *p)
         else {
             std::string s;
 
-            if (std::is_same<T, std::string>::value) {
+            if constexpr(std::is_same<T, std::string>::value) {
                 s = searchElementByIndex(this->root, v->index())->data;
             }
 
-            if (std::is_same<T, int>::value) {
+            if constexpr(std::is_same<T, int>::value) {
                 s = to_string(searchElementByIndex(this->root, v->index())->data);
             }
 
@@ -224,11 +208,11 @@ void BinTree<T>::draw_graph(Leaf *p)
         GA.strokeColor(e) = Color("#0000FF");
     }
 
-    SugiyamaLayout SL; //Compute a hierarchical drawing of G (using SugiyamaLayout)
+    TreeLayout SL; //Compute a hierarchical drawing of G (using SugiyamaLayout)
 
     SL.call(GA);
 
-    std::fstream fs("test.svg", std::ios::out);
+    std::fstream fs(output_filename, std::ios::out);
     GraphIO::drawSVG(GA, fs);
 }
 
