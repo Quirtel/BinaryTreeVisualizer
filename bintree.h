@@ -49,10 +49,10 @@ protected:
     class Leaf
     {
     public:
-        Leaf(T buf, int i)
+        Leaf(const T &buf, int data_index)
         {
             data = buf;
-            index = i;
+            index = data_index;
             Bal = 0;
         }
 
@@ -234,7 +234,7 @@ ogdf::node BinTree<T>::fill_graph(Leaf *p)
 }
 
 template<typename T>
-Leaf<T> *BinTree<T>::searchElementByIndex(Leaf *p, const int &index)
+Leaf<T>* BinTree<T>::searchElementByIndex(Leaf *p, const int &index)
 {
     if (p != nullptr) {
         searchElementByIndex(p->left, index);
