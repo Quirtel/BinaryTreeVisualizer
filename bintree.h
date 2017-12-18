@@ -10,7 +10,7 @@
 #include <ogdf/tree/TreeLayout.h>
 #include <ogdf/layered/SugiyamaLayout.h>
 
-#define NULL_RENDER 0
+#define NULL_RENDER 1
 
 using namespace ogdf;
 
@@ -801,7 +801,7 @@ OptimalTree<T>::OptimalTree(const std::vector<T> &vec, const std::string &filena
         }
     }
 
-    perform_creation(0, n, vec);
+    perform_creation(0, n - 1, vec);
 }
 
 template<typename T>

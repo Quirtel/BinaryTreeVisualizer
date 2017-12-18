@@ -10,16 +10,14 @@ using namespace std;
 
 
 int main(int argc, char *argv[]) {
-    const int N = 10;
-
     srand(static_cast<unsigned int>(time(nullptr)));
 
     vector<int> vec;
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 40; i++)
     {
         vec.push_back(rand() % 400 + 100);
     }
-    AVLTree<int> tree(vec, "test.svg");
+    RandomTree<int> tree(vec, "test.svg");
     tree.print();
     tree.drawGraph();
 
